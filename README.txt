@@ -4,8 +4,6 @@ Requires at least: 5.3.2
 Tested up to: 5.3.2
 Stable tag: 5.3.2
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
-
 == Description ==
 
 This plugin allows your customers to enter their booking references with password in order to see their Itineraries
