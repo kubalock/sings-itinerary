@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://github.com/kubalock/sings-itinerary
- * @since             0.0.1
+ * @since             0.0.2
  * @package           Sings_Itinerary
  *
  * @wordpress-plugin
  * Plugin Name:       Sings Itinerary
  * Plugin URI:        https://github.com/kubalock/sings-itinerary
  * Description:       This plugin allows your customers to enter their booking references with password in order to see their Itineraries
- * Version:           0.0.1
+ * Version:           0.0.2
  * Author:            Grzegorz Kubala
  * Author URI:
  * License:           GPL-2.0+
