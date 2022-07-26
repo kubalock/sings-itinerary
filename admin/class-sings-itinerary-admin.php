@@ -149,8 +149,10 @@ class Sings_Itinerary_Admin {
             // Page on which to add this section of options
             'sings_itinerary_general_settings'
         );
-        unset($args);
-        $args = array (
+        // Make sure all of below variables are unset first
+        unset($widgetIDinput);
+        // Set up variables' details below - whether they are text field, selects etc..
+        $widgetIDinput = array (
             'type'      => 'input',
             'subtype'   => 'text',
             'id'    => 'sings_itinerary_wpBranchID',
@@ -160,16 +162,16 @@ class Sings_Itinerary_Admin {
             'value_type'=>'normal',
             'wp_data' => 'option',
         );
+        // Add above variables to the 'setting' bit and then...
         add_settings_field(
             'sings_itinerary_wpBranchID',
             'Sings Widget ID',
             array( $this, 'sings_itinerary_render_settings_field' ),
             'sings_itinerary_general_settings',
             'sings_itinerary_general_section',
-            $args
+            $widgetIDinput
         );
-
-
+        // Register the 'setting' bit within the page (which will display all of the above on the page)
         register_setting(
             'sings_itinerary_general_settings',
             'sings_itinerary_wpBranchID'
@@ -284,15 +286,31 @@ class hstngr_widget extends WP_Widget {
 add_action('template_redirect', 'getSingsItinerary');
 
 function getSingsItinerary() {
-    // Check if variables are empty first
-    if (isset($_POST['bookingRef']) and isset($_POST['password'])) {
-        $bookingRef = sanitize_text_field($_POST['bookingRef']);
-        $password = sanitize_text_field($_POST['password']);
+    $baseURL = 'https://front.singstravel.co.uk';
+    $baseAPI = 'https://staging.singstravel.co.uk';
 
-        echo "haha!";
-        echo $bookingRef . "<br>"  . $password . "<br>" . get_option('sings_itinerary_wpBranchID');
+    try {
+        // Check if variables are empty first
+        if (isset($_POST['bookingRef']) and isset($_POST['password'])) {
+            $bookingRef = sanitize_text_field($_POST['bookingRef']);
+            $password = sanitize_text_field($_POST['password']);
 
-        header('Location: https://www.bbc.co.uk/', true, 303);
+            $baseURL = 'https://front.singstravel.co.uk/';
+
+            $apiUrl = $baseAPI . '/authWpWidgetRequest?wpBranchID=' . get_option('sings_itinerary_wpBranchID') .
+                '&bookingReference=' . $bookingRef . '&password=' . $password;
+
+            $response = json_decode(file_get_contents($apiUrl));
+
+            if ($response->status == "OK") {
+                header('Location: ' . $baseURL . '/booking/' . $response->data->publicRequest . '/' . $response->data->publicKey, true, 303);
+            } else {
+                header('Location: ' . $baseURL, true, 303);
+            }
+            die();
+        }
+    } catch (Exception $e) {
+        header('Location: ' . $baseURL, true, 303);
         die();
     }
 }
