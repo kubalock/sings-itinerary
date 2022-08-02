@@ -286,16 +286,14 @@ class hstngr_widget extends WP_Widget {
 add_action('template_redirect', 'getSingsItinerary');
 
 function getSingsItinerary() {
-    $baseURL = 'https://front.singstravel.co.uk';
-    $baseAPI = 'https://staging.singstravel.co.uk';
+    $baseURL = 'https://customer.singstravel.co.uk';
+    $baseAPI = 'https://api.singstravel.co.uk';
 
     try {
         // Check if variables are empty first
         if (isset($_POST['bookingRef']) and isset($_POST['password'])) {
             $bookingRef = sanitize_text_field($_POST['bookingRef']);
             $password = sanitize_text_field($_POST['password']);
-
-            $baseURL = 'https://front.singstravel.co.uk/';
 
             $apiUrl = $baseAPI . '/authWpWidgetRequest?wpBranchID=' . get_option('sings_itinerary_wpBranchID') .
                 '&bookingReference=' . $bookingRef . '&password=' . $password;

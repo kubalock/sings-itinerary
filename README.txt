@@ -21,5 +21,11 @@ going to your branch setup in SinGS.
 
 == Changelog ==
 
+= 1.0.0 =
+* First official release of the plugin
+
+= 0.0.2 =
+* Beta tests - connected with SinGS test site
+
 = 0.0.1 =
 * Initial commit - alpha tests begin here
